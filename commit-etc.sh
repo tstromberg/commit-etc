@@ -11,6 +11,9 @@ fi
 dirs="/etc /usr/local/etc /root /usr/pkg/etc /opt/homebrew/etc"
 cd $HOME/etc-$hostname || exit 1
 
+echo "$(hostname) configuration synced via https://github.com/tstromberg/commit-etc" > README.md
+uname -a > uname.txt
+
 for dir in $dirs; do
 	if [ ! -d "${dir}" ]; then
 		continue
@@ -75,7 +78,7 @@ for dir in $dirs; do
 		--exclude wireguard/ \
 		--exclude wpa_supplicant/ \
 		--exclude xdg/ \
-		--exclude zos-remote.conf
+		--exclude zos-remote.conf \
 		.
 done
 

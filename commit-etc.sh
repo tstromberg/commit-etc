@@ -53,6 +53,8 @@ for dir in $dirs; do
 		--exclude audisp-remote.conf \
 		--exclude bluetooth/ \
 		--exclude cups/ \
+		--exclude crontab \
+		--exclude doas.conf \
 		--exclude devfs.rules \
 		--exclude errors/ \
 		--exclude fonts/ \

@@ -1,18 +1,20 @@
 #!/bin/sh
-# check that rsync is installed
-rsync --version || exit 1
-
-if [ -f /proc/sys/kernel/hostname ]; then
-	hostname=$(cat /proc/sys/kernel/hostname)
-else
-	hostname=$(hostname -s)
-fi
+# script to periodically sync a UNIX systems configuration to GitHub
+#
+# usage:
+#
+# 1. Create a git repo somewhere, such as GitHub
+# 2. git clone <repo> $HOME/commit-etc
+# 3. cp commit-etc.sh $HOME/commit-etc
+# 4. $HOME/commit-etc/commit-etc.sh
+# 5. Add to crontab (daily)
 
 dirs="/etc /usr/local/etc /root /usr/pkg/etc /opt/homebrew/etc"
-cd $HOME/etc-$hostname || exit 1
+cd "${HOME}/commit-etc" || exit 1
+rsync --version || exit 1
 
-echo "$(hostname) configuration synced via https://github.com/tstromberg/commit-etc" > README.md
-uname -a > uname.txt
+echo "$(hostname) configuration synced via https://github.com/tstromberg/commit-etc" >README.md
+uname -a >uname.txt
 
 for dir in $dirs; do
 	if [ ! -d "${dir}" ]; then
@@ -22,7 +24,7 @@ for dir in $dirs; do
 		continue
 	fi
 
-	rsync -vaRm --delete-excluded $dir \
+	rsync -vaRm --delete-excluded "${dir}" \
 		--exclude .ssh/ \
 		--exclude "*.cache" \
 		--exclude "*.db" \

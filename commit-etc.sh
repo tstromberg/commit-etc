@@ -4,13 +4,21 @@
 # usage:
 #
 # 1. Create a git repo somewhere, such as GitHub
-# 2. git clone <repo> $HOME/commit-etc
+# 2. git clone <remote repo> $HOME/commit-etc
 # 3. cp commit-etc.sh $HOME/commit-etc
 # 4. $HOME/commit-etc/commit-etc.sh
 # 5. Add to crontab (daily)
 
 dirs="/etc /usr/local/etc /root /usr/pkg/etc /opt/homebrew/etc"
 cd "${HOME}/commit-etc" || exit 1
+
+if [[ ! -d .git ]]; then
+    echo "$HOME/commit-etc is not a valid git clone (.git directory missing) - to get started:"
+    echo ""
+    echo "git clone <remote repo> $HOME/commit-etc"
+    exit 1
+fi
+
 rsync --version || exit 1
 
 echo "$(hostname) configuration synced via https://github.com/tstromberg/commit-etc" >README.md

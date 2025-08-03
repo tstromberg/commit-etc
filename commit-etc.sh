@@ -8,11 +8,12 @@
 # 3. cp commit-etc.sh $HOME/commit-etc
 # 4. $HOME/commit-etc/commit-etc.sh
 # 5. Add to crontab (daily)
+#     0 0 * * * $HOME/commit-etc/commit-etc.sh
 
 dirs="/etc /usr/local/etc /root /usr/pkg/etc /opt/homebrew/etc"
 cd "${HOME}/commit-etc" || exit 1
 
-if [[ ! -d .git ]]; then
+if [ ! -d .git ]; then
     echo "$HOME/commit-etc is not a valid git clone (.git directory missing) - to get started:"
     echo ""
     echo "git clone <remote repo> $HOME/commit-etc"
